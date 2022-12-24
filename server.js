@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const { connection } = require("./config/db");
+const { userController } = require("./routes/user.routes");
+const { authentication } = require("./middlewares/authentication");
 
 require("dotenv").config();
 
@@ -13,6 +15,10 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("This is the Home Page");
 });
+
+app.use("/user", userController);
+
+app.use(authentication)
 
 app.listen(PORT, async () => {
   try {
